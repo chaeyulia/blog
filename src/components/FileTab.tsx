@@ -4,7 +4,7 @@ import { Link } from "gatsby";
 export type TabPosition = "left" | "center" | "right";
 
 interface FileTabProps {
-  number: number;
+  number: string;
   label?: string;
   category?: string;
   style?: React.CSSProperties;
@@ -30,24 +30,24 @@ const FileTab: React.FC<FileTabProps> = ({
 
   const content = (
     <div
-      className={`absolute left-0 w-full max-w-[500px] h-[50px] bg-white rounded-t-lg flex items-center px-4 mb-[-20px] border border-black cursor-pointer transition rounded-[6px 6px 8px 8px] group ${
+      className={`absolute left-0 w-full max-w-[500px] h-[50px] bg-white rounded-t-lg flex items-center px-4 mb-[-20px] border border-black cursor-pointer rounded-[6px 6px 8px 8px] group ${
         isSpecialNumber
-          ? "hover:bg-neutral-700 [&:has(div:hover)]:bg-neutral-700"
+          ? "hover:bg-neutral-600 [&:has(div:hover)]:bg-neutral-600"
           : "hover:bg-gray-100 [&:has(div:hover)]:bg-gray-100"
       }`}
       style={style}
     >
       <div style={{ margin: "25px 0px" }}>
         <div
-          className={`absolute inline-block transform-3d border border-black border-b-0 rounded-t-lg top-[-32px] whitespace-nowrap transition-colors ${
+          className={`absolute inline-block transform-3d border border-black border-b-0 rounded-t-lg top-[-28px] whitespace-nowrap ${
             category
-              ? "bg-black text-white hover:bg-neutral-700 group-hover:bg-neutral-700"
+              ? "bg-black text-white hover:bg-neutral-600 group-hover:bg-neutral-600"
               : "bg-white text-black hover:bg-gray-100 group-hover:bg-gray-100"
           } ${getTabPositionStyle(position)}`}
           style={{
-            padding: "10px 30px",
+            padding: "8px 24px",
             transform:
-              "perspective(300px) rotateX(34deg) translateZ(25px) translateY(5px)",
+              "perspective(300px) rotateX(10deg) translateZ(24px) translateY(-9px)",
           }}
         >
           <span className="text-base">
