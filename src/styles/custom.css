@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-dotted-line {
+    background-image: linear-gradient(to right, black 40%, transparent 0%);
+    background-size: 6px 1px;
+  }
+}
