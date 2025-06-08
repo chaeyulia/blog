@@ -2,6 +2,7 @@ import React from "react";
 import FileTab from "../components/FileTab";
 import type { HeadFC } from "gatsby";
 import type { TabPosition } from "../components/FileTab";
+import { GITHUB_URL, EMAIL_ADDRESS } from "../constants/url";
 
 interface File {
   number: string;
@@ -11,22 +12,29 @@ interface File {
   label?: string;
 }
 const FILE_LIST: File[] = [
-  { number: "00", category: "About me", position: "left" },
-  { number: "001", label: "이력서", position: "center", to: "/posts" },
-  { number: "002", label: "포트폴리오", to: "/posts", position: "right" },
-  // { number: 99, label: "🐰🥔?", position: "left" },
-  { number: "01", category: "Posts" },
-  // { number: 101, label: "전체 글", position: "right" },
+  { number: "00", category: "About me", position: "left", to: "/about" },
+  { number: "001", label: "이력서", position: "center", to: "/resume" },
+  {
+    number: "002",
+    label: "포트폴리오",
+    position: "right",
+    to: "/my-portfolio",
+  },
+  { number: "01", category: "Posts", to: "/posts" },
   { number: "011", label: "삽질", position: "right" },
   { number: "012", label: "FE" },
   { number: "013", label: "BE", position: "left" },
   { number: "014", label: "공부", position: "right" },
   { number: "015", label: "회고" },
   { number: "016", label: "그 외", position: "left" },
-  { number: "02", category: "Contact", position: "right" },
-  { number: "021", label: "깃허브", position: "center" },
-  { number: "022", label: "이메일", position: "left" },
-  // { number: 112, label: "🐥" },
+  { number: "02", category: "Contact", position: "right", to: "/contacts" },
+  { number: "021", label: "깃허브", position: "center", to: GITHUB_URL },
+  {
+    number: "022",
+    label: "이메일",
+    position: "left",
+    to: `mailto:${EMAIL_ADDRESS}`,
+  },
 ];
 
 const IndexPage = () => (
@@ -71,7 +79,7 @@ const IndexPage = () => (
             transform: "perspective(300px) rotateX(-30deg)",
           }}
         >
-          Chae Yulia
+          Chae Julia
         </span>
       </div>
     </div>
@@ -80,4 +88,4 @@ const IndexPage = () => (
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <title>치악산 복숭아</title>;
+export const Head: HeadFC = () => <title>치악산 복숭아 기술 블로그</title>;
