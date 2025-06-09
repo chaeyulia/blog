@@ -1,5 +1,6 @@
 import { BLOG_URL } from "./src/constants/url";
 import type { GatsbyConfig } from "gatsby";
+import remarkGfm from "remark-gfm";
 import { resolve } from "path";
 
 require("dotenv").config({
@@ -15,7 +16,6 @@ const config: GatsbyConfig = {
   plugins: [
     "gatsby-plugin-postcss",
     "gatsby-plugin-image",
-    "gatsby-plugin-mdx",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
@@ -24,6 +24,50 @@ const config: GatsbyConfig = {
         trackingIds: [process.env.GATSBY_GOOGLE_ANALYTICS_ID || ""],
       },
     },
+    {
+      resolve: "gatsby-plugin-mdx",
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: "gatsby-remark-autolink-headers",
+            options: {
+              elements: ["h1", "h2", "h3", "h4"],
+            },
+          },
+          {
+            resolve: "gatsby-remark-images",
+            options: {
+              maxWidth: 1200,
+              quality: 85,
+              withWebp: true,
+              withAvif: true,
+              loading: "lazy",
+              linkImagesToOriginal: false,
+              backgroundColor: "transparent",
+              disableBgImageOnAlpha: true,
+              srcSetBreakpoints: [400, 600, 800, 1200],
+              showCaptions: true,
+              wrapperStyle: "margin: 2rem 0;",
+            },
+          },
+        ],
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      },
+    },
+    {
+      resolve: "gatsby-plugin-sharp",
+      options: {
+        defaults: {
+          formats: ["auto", "webp", "avif"],
+          placeholder: "blurred",
+          quality: 85,
+          breakpoints: [400, 600, 800, 1200, 1600],
+        },
+      },
+    },
+
     {
       resolve: "gatsby-source-filesystem",
       options: {
