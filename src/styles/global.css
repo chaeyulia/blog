@@ -47,9 +47,6 @@ body {
   blockquote {
     @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4;
   }
-  pre {
-    @apply bg-gray-100 p-4 rounded overflow-x-auto;
-  }
   strong {
     background: linear-gradient(to top, #fcf22f 50%, transparent 50%);
   }
