@@ -9,7 +9,7 @@ require("dotenv").config({
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `blog`,
+    title: "치악산 복숭아 개발 블로그",
     siteUrl: BLOG_URL,
   },
   graphqlTypegen: true,

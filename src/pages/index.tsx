@@ -20,26 +20,35 @@ const FILE_LIST: File[] = [
     position: "right",
     to: "/my-portfolio",
   },
-  { number: "01", category: "Posts", to: "/posts" },
-  { number: "011", label: "삽질", position: "right" },
-  { number: "012", label: "FE" },
-  { number: "013", label: "BE", position: "left" },
-  { number: "014", label: "공부", position: "right" },
-  { number: "015", label: "회고" },
-  { number: "016", label: "그 외", position: "left" },
-  { number: "02", category: "Contact", position: "right", to: "/contacts" },
-  { number: "021", label: "깃허브", position: "center", to: GITHUB_URL },
+  { number: "01", category: "Contact", position: "left", to: "/contact" },
+  { number: "011", label: "깃허브", position: "center", to: GITHUB_URL },
   {
-    number: "022",
+    number: "012",
     label: "이메일",
-    position: "left",
+    position: "right",
     to: `mailto:${EMAIL_ADDRESS}`,
+  },
+  { number: "02", category: "Posts", to: "/all-posts" },
+  {
+    number: "021",
+    label: "버그 수정",
+    to: "/bug-fix",
+    position: "left",
+  },
+  { number: "022", label: "FE", position: "right", to: "/fe" },
+  { number: "023", label: "BE", to: "/be" },
+  { number: "024", label: "회고", to: "/retrospect", position: "left" },
+  {
+    number: "025",
+    label: "그 외",
+    position: "right",
+    to: "/etc",
   },
 ];
 
 const IndexPage = () => (
-  <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-    <div className="border border-black relative min-w-[260px] w-[60vw] max-w-[500px] h-[36.4vh] flex flex-col items-center justify-center border-b-0">
+  <main className="container items-center justify-center">
+    <div className="border border-black relative min-w-[260px] w-[60vw] max-w-[500px] h-[35vh] flex flex-col items-center justify-center border-b-0">
       {FILE_LIST.map((file, idx) => {
         return (
           <FileTab
@@ -50,7 +59,7 @@ const IndexPage = () => (
             category={file.category}
             to={file.to}
             style={{
-              top: idx * 22,
+              top: idx * 25,
               zIndex: idx * 5,
               transform:
                 "perspective(600px) rotateX(-40deg) translateZ(-25px) translateY(-5px)",

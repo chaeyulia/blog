@@ -1,0 +1,135 @@
+---
+title: "React Hooks 완벽 가이드: useState부터 Custom Hook까지"
+date: "2024-03-20"
+slug: "/bugs"
+tags: ["bugs"]
+category: "bug-fix"
+---
+
+# React Hooks 완벽 가이드: useState부터 Custom Hook까지
+
+React Hooks는 함수형 컴포넌트에서 상태 관리와 생명주기 기능을 사용할 수 있게 해주는 강력한 기능입니다. 이번 포스트에서는 React Hooks의 기본 개념부터 실제 사용 사례까지 자세히 살펴보겠습니다.
+
+## 1. React Hooks란?
+
+React Hooks는 React 16.8 버전에서 도입된 기능으로, 함수형 컴포넌트에서도 클래스 컴포넌트의 기능을 사용할 수 있게 해줍니다. 주요 장점은 다음과 같습니다:
+
+- 코드 재사용성 향상
+- 로직의 관심사 분리
+- 클래스 컴포넌트의 복잡성 제거
+
+## 2. 기본 Hooks 살펴보기
+
+### useState
+
+가장 기본적인 Hook으로, 컴포넌트의 상태를 관리합니다.
+
+```jsx
+const [count, setCount] = useState(0);
+```
+
+### useEffect
+
+컴포넌트의 생명주기와 관련된 작업을 처리할 수 있습니다.
+
+```jsx
+useEffect(() => {
+  document.title = `Count: ${count}`;
+}, [count]);
+```
+
+### useContext
+
+Context API를 더 쉽게 사용할 수 있게 해줍니다.
+
+```jsx
+const theme = useContext(ThemeContext);
+```
+
+## 3. Custom Hook 만들기
+
+Custom Hook은 로직을 재사용 가능한 함수로 분리할 수 있게 해줍니다.
+
+```jsx
+function useWindowSize() {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return size;
+}
+```
+
+## 4. 실제 사용 사례
+
+### 폼 관리
+
+```jsx
+function useForm(initialValues) {
+  const [values, setValues] = useState(initialValues);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  return { values, handleChange };
+}
+```
+
+### API 호출
+
+```jsx
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading, error };
+}
+```
+
+## 5. Hooks 사용 시 주의사항
+
+1. 최상위에서만 Hook을 호출해야 합니다.
+2. React 함수 컴포넌트 내에서만 Hook을 호출해야 합니다.
+3. 조건문, 반복문, 중첩된 함수 내에서 Hook을 호출하면 안 됩니다.
+
+## 6. 결론
+
+React Hooks는 함수형 컴포넌트의 강력함을 한층 더 높여주는 기능입니다. 적절히 활용하면 더 깔끔하고 재사용 가능한 코드를 작성할 수 있습니다. 이번 가이드가 React Hooks를 이해하고 활용하는 데 도움이 되었기를 바랍니다.
+
+## 참고 자료
+
+- [React 공식 문서](https://reactjs.org/docs/hooks-intro.html)
+- [React Hooks 완벽 가이드](https://www.robinwieruch.de/react-hooks-fetch-data)
+- [useHooks.com](https://usehooks.com/)

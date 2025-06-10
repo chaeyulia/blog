@@ -1,10 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import {
-  GITHUB_URL,
-  EMAIL_ADDRESS,
-  PREVIOUS_BLOG_URL,
-} from "../../constants/url";
+import { GITHUB_URL, EMAIL_ADDRESS, PREVIOUS_BLOG_URL } from "../constants/url";
 
 interface ContactItemProps {
   label: string;
@@ -36,7 +32,7 @@ const ContactsPage = () => {
   ];
 
   return (
-    <main className="relative h-full w-full bg-gray-50">
+    <main className="container items-center justify-center">
       <div className="relative w-[60vw] min-w-[250px] max-w-[550px] bg-white p-8 shadow-sm">
         <div className="flex flex-col items-center mb-6">
           <p className="italic mt-0 mb-2! text-neutral-600!">How to reach me</p>
