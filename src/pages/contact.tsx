@@ -15,10 +15,7 @@ const ContactItem = ({ label, url, isEmail = false }: ContactItemProps) => (
   <div className="w-full flex items-center justify-between sm:flex-row flex-col">
     <span className="font-medium">{label}</span>
     <div className="flex-grow border-t border-dotted border-black mx-2" />
-    <Link
-      to={isEmail ? `mailto:${url}` : url}
-      className="text-blue-600 hover:underline"
-    >
+    <Link to={isEmail ? `mailto:${url}` : url} className="hover:text-cGreen!">
       {url}
     </Link>
   </div>

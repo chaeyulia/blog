@@ -1,7 +1,8 @@
 @import "tailwindcss";
+@import "./custom.css";
 
 body {
-  @apply bg-gray-100 text-gray-900 min-h-screen;
+  @apply bg-gray-50 text-gray-900 min-h-screen;
   .container {
     @apply min-h-screen min-w-full max-w-screen flex flex-col px-4 py-8;
   }
@@ -29,7 +30,7 @@ body {
     @apply mb-4 text-gray-700;
   }
   a {
-    @apply text-blue-600 hover:text-blue-800;
+    @apply text-moss hover:underline;
   }
   ul,
   ol {
@@ -48,7 +49,7 @@ body {
     @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4;
   }
   strong {
-    background: linear-gradient(to top, #fcf22f 50%, transparent 50%);
+    background: linear-gradient(to top, #c9e6b8 50%, transparent 50%);
   }
 
   .contains-task-list {

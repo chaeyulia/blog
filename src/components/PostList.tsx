@@ -99,7 +99,7 @@ export default function PostList({ data, currentCategory }: PostListProps) {
                   className="pb-2 mb-6 not-last:border-b border-gray-300 last:mb-0"
                 >
                   <Link to={`/posts${node.frontmatter?.slug}`}>
-                    <h3 className="text-xl! text-blue-600! hover:underline">
+                    <h3 className="text-xl! text-moss! hover:underline hover:text-cGreen!">
                       {node.frontmatter?.title}
                     </h3>
                   </Link>
