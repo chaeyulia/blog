@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql, PageProps } from "gatsby";
-
+import Giscus from "@giscus/react";
 interface TOCItem {
   url: string;
   title: string;
@@ -65,8 +65,26 @@ const PostTemplate = ({
               <TableOfContents items={toc.items} />
             </aside>
           )}
-
-          <article className="flex-1 w-full">{children}</article>
+          <div className="flex-1 w-full">
+            <article>{children}</article>
+            <section>
+              <Giscus
+                id="comments"
+                repo="chaeyulia/blog"
+                repoId="R_kgDOO2dZZA"
+                category="Announcements"
+                categoryId="DIC_kwDOO2dZZM4CrR-f"
+                mapping="specific"
+                term={data.mdx.frontmatter?.title ?? "untitled"}
+                reactionsEnabled="1"
+                emitMetadata="0"
+                inputPosition="top"
+                theme="light"
+                lang="en"
+                loading="lazy"
+              />
+            </section>
+          </div>
         </div>
       </div>
     </div>
