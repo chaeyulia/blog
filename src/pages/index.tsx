@@ -3,6 +3,7 @@ import Menu from "../components/Menu";
 import type { HeadFC } from "gatsby";
 import { GITHUB_URL, EMAIL_ADDRESS } from "../constants/url";
 import { StaticImage } from "gatsby-plugin-image";
+import SEO from "../components/SEO";
 
 const MENU_LIST = [
   { category: "About me", to: "/about" },
@@ -51,4 +52,4 @@ const IndexPage = () => (
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <title>치악산 복숭아 기술 블로그</title>;
+export const Head = () => <SEO />;

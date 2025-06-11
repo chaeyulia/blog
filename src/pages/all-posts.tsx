@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql, PageProps } from "gatsby";
 import PostList from "../components/PostList";
+import SEO from "../components/SEO";
 
 export default function AllPostsPage({
   data,
@@ -27,3 +28,5 @@ export const query = graphql`
     }
   }
 `;
+
+export const Head = () => <SEO title="전체 글" />;

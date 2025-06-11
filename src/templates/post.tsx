@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql, PageProps } from "gatsby";
 import Giscus from "@giscus/react";
+import SEO from "../components/SEO";
 interface TOCItem {
   url: string;
   title: string;
@@ -111,3 +112,7 @@ export const query = graphql`
     }
   }
 `;
+
+export const Head = ({ data }: PageProps<Queries.PostTemplateQuery>) => (
+  <SEO title={data.mdx?.frontmatter?.title ?? ""} />
+);

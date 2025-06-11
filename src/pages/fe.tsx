@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql, PageProps } from "gatsby";
 import PostList from "../components/PostList";
+import SEO from "../components/SEO";
 
 export default function FEPage({ data }: PageProps<Queries.FEPostsQuery>) {
   return <PostList data={data} currentCategory="fe" />;
@@ -28,3 +29,4 @@ export const query = graphql`
     }
   }
 `;
+export const Head = () => <SEO title="FE 공부" />;

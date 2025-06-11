@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { GITHUB_URL, EMAIL_ADDRESS, PREVIOUS_BLOG_URL } from "../constants/url";
-
+import SEO from "../components/SEO";
 interface ContactItemProps {
   label: string;
   url: string;
@@ -58,3 +58,5 @@ const ContactsPage = () => {
 };
 
 export default ContactsPage;
+
+export const Head = () => <SEO title="Contact" />;

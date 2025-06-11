@@ -9,8 +9,9 @@ require("dotenv").config({
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: "치악산 복숭아 개발 블로그",
+    title: "치악산 복숭아 기술 블로그",
     siteUrl: BLOG_URL,
+    image: `/images/icon.png`,
   },
   graphqlTypegen: true,
   plugins: [
@@ -75,7 +76,18 @@ const config: GatsbyConfig = {
         },
       },
     },
-
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `치악산 복숭아 기술 블로그`,
+        short_name: `치악산 복숭아`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#ffe066`,
+        display: `minimal-ui`,
+        icon: `src/images/icon.png`,
+      },
+    },
     {
       resolve: "gatsby-source-filesystem",
       options: {

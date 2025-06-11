@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
+import SEO from "../components/SEO";
 
 const AboutMePage = () => (
   <main className="container flex items-center justify-center">
@@ -30,3 +31,5 @@ const AboutMePage = () => (
 );
 
 export default AboutMePage;
+
+export const Head = () => <SEO title="About me" />;

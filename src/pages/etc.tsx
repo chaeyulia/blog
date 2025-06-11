@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql, PageProps } from "gatsby";
 import PostList from "../components/PostList";
+import SEO from "../components/SEO";
 
 export default function EtcPage({ data }: PageProps<Queries.EtcPostsQuery>) {
   return <PostList data={data} currentCategory="etc" />;
@@ -32,3 +33,4 @@ export const query = graphql`
     }
   }
 `;
+export const Head = () => <SEO title="기타" />;
