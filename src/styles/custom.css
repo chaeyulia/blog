@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @layer utilities {
+  .center {
+    @apply flex items-center justify-center;
+  }
   .bg-dotted-line {
     background-image: linear-gradient(to right, black 40%, transparent 0%);
     background-size: 6px 1px;
@@ -27,8 +30,5 @@
 @theme {
   --breakpoint-xs: 320px;
   --color-moss: #276e14;
-  --color-cBG: #5db1be;
-  --color-lYellow: #eba834;
-  --color-cPink: #f94498;
-  --color-cGreen: #83be37;
+  --color-melon: #cbdb9c;
 }

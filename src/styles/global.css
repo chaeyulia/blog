@@ -3,8 +3,11 @@
 
 body {
   @apply bg-gray-50 text-gray-900 min-h-screen;
-  .container {
+  .root {
     @apply min-h-screen min-w-full max-w-screen flex flex-col px-4 py-8;
+  }
+  .container {
+    @apply flex flex-col grow w-full max-w-4xl mx-auto;
   }
   .title {
     @apply text-4xl sm:text-5xl;

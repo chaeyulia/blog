@@ -6,22 +6,24 @@ interface MenuProps {
   to?: string;
   label?: string;
 }
-const FileTab: React.FC<MenuProps> = ({ label = "", category, to }) => {
-  const isSpecialNumber = !!category;
+const Menu: React.FC<MenuProps> = ({ label, category, to }) => {
+  const isCategory = !!category;
+  const isDecoration = !to;
+  const isInternal = to && to?.startsWith("/");
 
   const content = (
     <button
       className={`flex items-center rounded-4xl border px-5 py-2.5 hover:cursor-pointer ${
-        isSpecialNumber
-          ? "text-black bg-moss border-black"
-          : "text-moss bg-gray-50"
-      }`}
+        isCategory ? "text-black bg-moss border-black" : "text-moss bg-gray-50"
+      } ${isDecoration ? "bg-melon border-melon hover:cursor-default!" : ""}`}
     >
       <span className="text-2xl font-semibold">{category ?? label}</span>
     </button>
   );
 
-  return to ? <Link to={to}>{content}</Link> : content;
+  if (isInternal) return <Link to={to}>{content}</Link>;
+  if (to) return <a href={to}>{content}</a>;
+  return content;
 };
 
-export default FileTab;
+export default Menu;

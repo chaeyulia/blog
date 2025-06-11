@@ -1,6 +1,5 @@
 import React from "react";
 import Menu from "../components/Menu";
-import type { HeadFC } from "gatsby";
 import { GITHUB_URL, EMAIL_ADDRESS } from "../constants/url";
 import { StaticImage } from "gatsby-plugin-image";
 import SEO from "../components/SEO";
@@ -17,14 +16,14 @@ const MENU_LIST = [
   { label: "👩‍💻" },
   { label: "버그 수정", to: "/bug-fix" },
   { label: "FE", to: "/fe" },
-  { label: "BE", to: "/be" },
   { label: "🏋️‍♂️🐱" },
+  { label: "BE", to: "/be" },
   { label: "회고", to: "/retrospect" },
   { label: "그 외", to: "/etc" },
 ];
 
 const IndexPage = () => (
-  <main className="container items-center justify-center">
+  <main className="root center">
     <header className="flex gap-2 m-[1vw] items-center">
       <StaticImage
         src="../images/profile.png"
@@ -35,7 +34,7 @@ const IndexPage = () => (
       />
       <h1 className="text-lg! text-medium! m-0!">치악산 복숭아 기술 블로그</h1>
     </header>
-    <nav className="flex items-center justify-center gap-3 max-w-[50vw] flex-wrap">
+    <nav className="center gap-3 max-w-[50vw] flex-wrap">
       {MENU_LIST.map((file) => {
         return (
           <Menu

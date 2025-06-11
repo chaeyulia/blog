@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { GITHUB_URL, EMAIL_ADDRESS, PREVIOUS_BLOG_URL } from "../constants/url";
 import SEO from "../components/SEO";
+import NavigationBar from "../components/NavigationBar";
 interface ContactItemProps {
   label: string;
   url: string;
@@ -29,31 +30,38 @@ const ContactsPage = () => {
   ];
 
   return (
-    <main className="container items-center justify-center">
-      <div className="relative w-[60vw] min-w-[250px] max-w-[550px] bg-white p-8 shadow-sm">
-        <div className="flex flex-col items-center mb-6">
-          <p className="italic mt-0 mb-2! text-neutral-600!">How to reach me</p>
-          <DottedLine />
-          <h1
-            className="text-5xl/14! font-black! m-0! transform-[scale(2
+    <div className="root">
+      <div className="container">
+        <NavigationBar />
+        <main className="center grow">
+          <div className="relative w-[60vw] min-w-[250px] max-w-[550px] bg-white p-8 shadow-sm">
+            <div className="center mb-6">
+              <p className="italic mt-0 mb-2! text-neutral-600!">
+                How to reach me
+              </p>
+              <DottedLine />
+              <h1
+                className="text-5xl/14! font-black! m-0! transform-[scale(2
           )] tracking-tighter"
-          >
-            CONTACT
-          </h1>
-          <DottedLine />
-        </div>
+              >
+                CONTACT
+              </h1>
+              <DottedLine />
+            </div>
 
-        <div className="flex flex-col items-start justify-between gap-1.5">
-          {CONTACT_ITEM.map((item, index) => (
-            <ContactItem key={index} {...item} />
-          ))}
-        </div>
+            <div className="flex flex-col items-start justify-between gap-1.5">
+              {CONTACT_ITEM.map((item, index) => (
+                <ContactItem key={index} {...item} />
+              ))}
+            </div>
 
-        <p className="mb-0! mt-6 text-sm text-center italic text-neutral-500!">
-          Last updated: 2025. 06. 08
-        </p>
+            <p className="mb-0! mt-6 text-sm text-center italic text-neutral-500!">
+              Last updated: 2025. 06. 08
+            </p>
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   );
 };
 

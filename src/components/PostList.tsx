@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, navigate } from "gatsby";
+import NavigationBar from "../components/NavigationBar";
 
 const CATEGORIES = [
   { id: "all-posts", label: "전체 글" },
@@ -43,8 +44,9 @@ export default function PostList({ data, currentCategory }: PostListProps) {
   );
 
   return (
-    <div className="container">
-      <div className="w-full max-w-4xl items-center justify-center mx-auto px-4">
+    <div className="root">
+      <div className="container">
+        <NavigationBar />
         <header className="flex items-baseline mb-4 py-2 gap-1">
           <h1 className="title inline font-bold">Posts</h1>
           <span className="text-2xl font-semibold">
@@ -80,7 +82,7 @@ export default function PostList({ data, currentCategory }: PostListProps) {
                     onClick={() => setActiveTag(activeTag === tag ? "" : tag)}
                     className={`border text-left rounded-2xl px-3 py-1 text-sm hover:cursor-pointer ${
                       activeTag === tag
-                        ? "bg-black text-white"
+                        ? "bg-melon"
                         : "text-gray-700 hover:text-neutral-800"
                     }`}
                   >
