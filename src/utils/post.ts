@@ -18,7 +18,7 @@ export async function getPostsList(prefix?: string) {
       accessKey: !!process.env.AWS_ACCESS_KEY_ID,
       secretKey: !!process.env.AWS_SECRET_ACCESS_KEY
     });
-    
+
     const command = new ListObjectsV2Command({
       Bucket: "chiaksan-peaches",
       Prefix: prefix,
@@ -26,10 +26,8 @@ export async function getPostsList(prefix?: string) {
 
     const response = await s3.send(command);
     return (
-      response.Contents?.filter(obj => 
-        obj.Key && 
-        obj.Key.endsWith('.mdx') && 
-        !obj.Key.endsWith('/')
+      response.Contents?.filter(
+        (obj) => obj.Key && obj.Key.endsWith(".mdx") && !obj.Key.endsWith("/")
       ).map((obj) => ({
         key: obj.Key,
         slug: obj.Key?.replace(".mdx", ""),
