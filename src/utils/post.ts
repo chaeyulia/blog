@@ -3,6 +3,12 @@ import {
   GetObjectCommand,
   ListObjectsV2Command,
 } from "@aws-sdk/client-s3";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeStringify from "rehype-stringify";
+import matter from "gray-matter";
 
 const s3 = new S3Client({
   region: "ap-northeast-2",
@@ -14,11 +20,6 @@ const s3 = new S3Client({
 
 export async function getPostsList(prefix?: string) {
   try {
-    console.log('AWS keys available:', {
-      accessKey: !!process.env.AWS_ACCESS_KEY_ID,
-      secretKey: !!process.env.AWS_SECRET_ACCESS_KEY
-    });
-
     const command = new ListObjectsV2Command({
       Bucket: "chiaksan-peaches",
       Prefix: prefix,
@@ -43,10 +44,9 @@ export async function getPostsList(prefix?: string) {
 
 export async function getPostBySlug(slug: string) {
   try {
-    // slug는 전체 경로 포함 (예: "study/react-hooks-etc")
     const key = `${slug}.mdx`;
-    console.log('Finding S3 key:', key);
-    
+    console.log("Finding S3 key:", key);
+
     const command = new GetObjectCommand({
       Bucket: "chiaksan-peaches",
       Key: key,
@@ -55,9 +55,25 @@ export async function getPostBySlug(slug: string) {
     const response = await s3.send(command);
     const markdown = await response.Body?.transformToString();
 
+    const { data: frontmatter, content } = matter(markdown || "");
+
+    const processedContent = await remark()
+      .use(remarkGfm)
+      .use(remarkRehype)
+      .use(rehypePrettyCode, {
+        theme: "github-dark",
+        keepBackground: true,
+        defaultLang: "plaintext",
+      })
+      .use(rehypeStringify)
+      .process(content);
+
     return {
-      title: slug.replace(/-/g, " "),
-      content: markdown,
+      title:
+        frontmatter?.title || slug.split("/").pop()?.replace(/-/g, " ") || slug,
+      date: frontmatter?.date,
+      tags: frontmatter?.tags,
+      content: processedContent.toString(),
       slug: slug,
     };
   } catch (error) {

@@ -43,27 +43,21 @@ export default function PostList({ allPosts }: PostListProps) {
   });
 
   return (
-    <div className="h-screen flex check p-4">
+    <div className="h-screen flex gingham p-4">
       <div
         id="parent"
-        className="w-full max-h-[90vh] my-10 mx-4 max-w-[900px] flex justify-center bg-white rounded-4xl m-auto border border-[#B9B9B9] rounded-4xl mx-auto"
+        className="w-full h-full max-h-[90vh] my-auto mx-4 max-w-[900px] flex justify-center bg-white rounded-4xl m-auto border border-[#B9B9B9] rounded-4xl mx-auto"
       >
-        <div className="m-2 mr-0 w-1/2 sm:w-1/4 shadow-xl z-10 rounded-4xl bg-[#F9F9F9] border border-white border-2">
+        <div className="m-2 mr-0 w-1/2 xs:w-1/3 md:w-1/4 shadow-xl z-10 rounded-4xl bg-[#F9F9F9] border border-white border-2">
           <div className="p-4">
             <div className=" border border-1 border-[#FBFBFB] h-full rounded-4xl">
-              <Image
-                src="/menu.png"
-                alt="folder"
-                width={80}
-                height={20}
-                className="mb-2"
-              />
+              <Image src="/menu.png" alt="folder" width={80} height={20} />
 
               <nav className="mt-8">
                 {categories.map((category) => (
                   <div
                     key={category.id}
-                    className={`w-full gap-2 flex text-left p-2 rounded-xl mb-1 transition-colors font-semibold ${
+                    className={`h-10 w-full gap-2 flex items-center text-left p-1 md:p-2 rounded-xl mb-1 transition-colors font-semibold ${
                       selectedCategory === category.id
                         ? "bg-[#F0EFEF] text-cBlue"
                         : "hover:bg-[#f3f2f2] hover:cursor-pointer text-neutral-700"
@@ -79,17 +73,18 @@ export default function PostList({ allPosts }: PostListProps) {
                         selectedCategory === category.id ? "" : "grayscale"
                       }`}
                     />
-                    {category.name}
+                    <span className="truncate">{category.name}</span>
                   </div>
                 ))}
               </nav>
             </div>
           </div>
         </div>
-        <div id="right-child" className="m-2 flex-1 p-4 pt-0 overflow-y-auto">
-          {/* Header: Category Title + Search + Table Header */}
+        <div
+          id="right-child"
+          className="m-2 flex-1 p-4 pt-0 scrollbar overflow-y-auto"
+        >
           <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
-            {/* Category Title + Search */}
             <div className="flex items-center justify-between py-4 h-[70px]">
               <h1 className="text-lg font-bold text-neutral-700">
                 {categories.find((cat) => cat.id === selectedCategory)?.name}
@@ -127,7 +122,7 @@ export default function PostList({ allPosts }: PostListProps) {
                       </div>
                       <input
                         type="text"
-                        placeholder="검색"
+                        placeholder="검색 (구현 예정)"
                         className="w-full pl-10 pr-4 py-2 text-neutral-500 text-sm font-medium rounded-full focus:ring-3 focus:ring-inset focus:ring-[#91AFF2] focus:outline-none"
                         onBlur={() =>
                           setTimeout(() => setIsSearchOpen(false), 150)
@@ -143,7 +138,7 @@ export default function PostList({ allPosts }: PostListProps) {
             {/* Table Header */}
             <div className="grid grid-cols-12 gap-4 text-sm font-semibold text-gray-600 pb-2">
               <div className="col-span-6">제목</div>
-              <div className="col-span-3">작성일</div>
+              <div className="col-span-3">최근 수정일</div>
               <div className="col-span-3">태그</div>
             </div>
           </div>

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -9,12 +11,6 @@
   --color-cBlue: #0072f7;
   --breakpoint-xs: 350;
 }
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -23,7 +19,7 @@
   }
 }
 
-.check {
+.gingham {
   background-image: linear-gradient(
       to right,
       rgba(152, 197, 217, 0.1) 25%,
@@ -44,7 +40,6 @@
       transparent 75%,
       transparent
     );
-
   background-size: 50px 50px;
 }
 
@@ -52,4 +47,122 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.content {
+  .title {
+    background: linear-gradient(
+      to top,
+      rgba(255, 223, 84, 0.5) 50%,
+      transparent 50%
+    );
+    background-size: 100% 80%;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+    word-break: break-all;
+  }
+  h1 {
+    @apply font-semibold text-3xl mt-2 m-4;
+  }
+  h2 {
+    @apply font-semibold text-2xl mt-2 mt-3;
+  }
+  h3 {
+    @apply font-semibold text-xl my-2;
+  }
+  h4 {
+    @apply font-semibold text-lg my-1;
+  }
+  h5 {
+    @apply font-medium text-base mb-1;
+  }
+  h6 {
+    @apply font-medium text-sm;
+  }
+  p {
+    @apply mb-4 text-gray-700;
+  }
+  ul,
+  ol {
+    @apply list-disc pl-6 mb-4;
+  }
+  li {
+    @apply mb-2;
+  }
+  hr {
+    @apply border-gray-400 my-6;
+  }
+  blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4;
+  }
+  strong {
+    background: linear-gradient(to top, #c9e6b8 50%, transparent 50%);
+  }
+  table {
+    @apply table-auto border-collapse my-4;
+    width: 100%;
+    th,
+    td {
+      @apply border border-gray-300 px-4 py-2 text-left;
+    }
+    th {
+      @apply bg-gray-100 font-semibold;
+    }
+  }
+  pre {
+    @apply p-[1rem_0] rounded-lg overflow-x-auto;
+  }
+
+  pre [data-line] {
+    padding: 0 1rem;
+  }
+
+  pre code {
+    @apply text-sm font-mono;
+    background: none !important;
+  }
+
+  code:not(pre code) {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+
+  code[data-line-numbers] {
+    counter-reset: line;
+  }
+
+  code[data-line-numbers] > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 0.75rem;
+    margin-right: 2rem;
+    text-align: right;
+    color: gray;
+  }
+
+  code[data-line-numbers-max-digits="2"] > [data-line]::before {
+    width: 1.25rem;
+  }
+
+  code[data-line-numbers-max-digits="3"] > [data-line]::before {
+    width: 1.75rem;
+  }
+
+  code[data-line-numbers-max-digits="4"] > [data-line]::before {
+    width: 2.25rem;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    @apply w-4 h-4;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    @apply rounded-full mb-7 bg-[#f3f3f3];
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-[#7a7a7a] rounded-full;
+  }
 }

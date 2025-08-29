@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="w-full p-6 check h-screen">
+    <div className="w-full p-6 gingham h-screen">
       <main className="flex flex-col w-max ml-auto text-center gap-4 text-sm font-semibold">
         <Link href="/about" className="flex flex-col gap-2">
           <Image src="/folder.png" alt="folder" width={100} height={127} />
