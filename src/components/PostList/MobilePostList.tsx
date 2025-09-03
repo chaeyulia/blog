@@ -17,21 +17,26 @@ export default function MobilePostList({
     return title.toLowerCase().includes(searchTerm.toLowerCase());
   });
   return (
-    <div className="relative w-full max-w-[95vw] h-full max-h-[95vh] bg-[#FEFEFE] rounded-4xl border border-[#B9B9B9] rounded-4xl overflow-hidden">
+    <div className="container relative w-full max-w-[95vw] h-full max-h-[95vh] rounded-4xl border overflow-hidden">
       <div className="h-full m-2 pt-0">
-        <div className="sticky top-0 z-10 bg-white p-4 pb-0">
+        <div className="sticky top-0 z-10 p-4 pb-0">
           <div className="flex flex-col items-left py-4 gap-4">
-            <h1 className="text-xl font-bold text-neutral-700">
+            <h1 className="text-xl font-bold">
               {categories.find((cat) => cat.id === selectedCategory)?.name}
             </h1>
 
-            <div className="flex items-center overflow-hidden rounded-full bg-[#F5F5F4] shadow-sm focus-within:bg-white transition-all">
+            <div
+              className="flex items-center overflow-hidden rounded-full shadow-sm focus-within:bg-white transition-all"
+              style={{
+                backgroundColor: `color-mix(in srgb, var(--foreground) 10%, transparent)`,
+              }}
+            >
               <div className="w-full transition-all duration-300 ease-in-out w-64">
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
                     <Image
                       src="/search.png"
-                      alt="search"
+                      alt="검색 버튼 이미지"
                       width={16}
                       height={16}
                     />
@@ -41,7 +46,7 @@ export default function MobilePostList({
                     placeholder="검색"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 text-neutral-500 text-sm font-medium rounded-full focus:ring-1 focus:ring-inset focus:ring-white focus:outline-none "
+                    className="w-full pl-10 pr-4 py-2 text-neutral-500 text-sm font-medium rounded-full focus:ring-1 focus:ring-inset focus:ring-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -55,13 +60,13 @@ export default function MobilePostList({
               <a
                 key={post.key || index}
                 href={`/posts/${post.slug}`}
-                className="flex flex-col p-3 hover:bg-neutral-100 cursor-pointer transition-colors border-b border-neutral-200"
+                className="flex flex-col p-3 cursor-pointer transition-colors border-b border-neutral-200 dark:border-neutral-600  hover:bg-neutral-100 dark:hover:bg-neutral-800"
               >
-                <h3 className="text-gray-800 font-medium text-base">
+                <h3 className="font-medium text-base">
                   {post.slug?.split("/").pop()?.replace(/-/g, " ")}
                 </h3>
 
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-xs">
                   {post.lastModified
                     ? post.lastModified.toLocaleDateString("ko-KR", {
                         year: "numeric",
@@ -79,20 +84,25 @@ export default function MobilePostList({
           <p className="text-gray-500 text-center py-8">포스트가 없습니다.</p>
         )}
       </div>
-      <nav className="bg-white w-4/5 absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-full shadow-lg z-10">
+      <nav
+        className=" w-4/5 absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-full shadow-lg z-10 backdrop-blur-xs"
+        style={{
+          backgroundColor: `color-mix(in srgb, var(--background) 90%, transparent)`,
+        }}
+      >
         {categories.map((category) => (
           <div
             key={category.id}
             className={`w-full flex flex-col items-center p-1 rounded-full transition-colors font-semibold ${
               selectedCategory === category.id
                 ? "bg-[#F0EFEF] text-cBlue"
-                : "hover:bg-[#f3f2f2] hover:cursor-pointer text-neutral-700"
+                : "hover:cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
             }`}
             onClick={() => setSelectedCategory(category.id)}
           >
             <Image
               src="/inner-folder.png"
-              alt="menu"
+              alt="내부 폴더 이미지"
               width={25}
               height={20}
               className={`xs:block p-1 ${
