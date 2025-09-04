@@ -79,7 +79,7 @@ export async function getPostBySlug(slug: string) {
   } catch (error) {
     console.error("S3에서 파일을 찾을 수 없습니다:", error);
     return {
-      title: "포스트를 찾을 수 없습니다",
+      title: "404 NOT FOUND",
       content: "요청하신 포스트가 존재하지 않습니다.",
       slug: slug,
     };
