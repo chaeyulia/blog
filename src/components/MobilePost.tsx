@@ -6,11 +6,11 @@ export default function MobilePost({ post }: { post: any }) {
         {post.title}
       </h1>
 
-      <div className="h-full p-4 sm:p-5 overflow-y-auto content pb-12">
         <h1 className="mx-0! max-w-fit relative">
           <span className="relative title">{post.title}</span>
         </h1>
 
+      <div className="m-4 h-full p-4 sm:p-5 overflow-y-auto content pb-12">
         <div
           className={`flex text-sm text-neutral-500 mb-2
             ${

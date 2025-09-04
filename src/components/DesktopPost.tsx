@@ -13,11 +13,7 @@ export default function DesktopPost({ post }: { post: any }) {
         </h1>
       </div>
 
-      <div className="p-5 scrollbar overflow-y-auto content border-t border-neutral-300 dark:border-neutral-800">
-        <h1 className="ml-0! max-w-fit relative">
-          <span className="relative title">{post.title}</span>
-        </h1>
-
+      <div className="mx-4 p-5 scrollbar overflow-y-auto content border-t border-neutral-300 dark:border-neutral-800">
         <div className="flex text-sm text-neutral-500 mb-2 gap-2">
           <span>{post.date}</span>
           <span

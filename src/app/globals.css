@@ -58,17 +58,6 @@ body {
 }
 
 .content {
-  .title {
-    background: linear-gradient(
-      to top,
-      rgba(255, 217, 0, 0.35) 50%,
-      transparent 50%
-    );
-    background-size: 100% 80%;
-    background-position: 0 50%;
-    background-repeat: no-repeat;
-    word-break: break-all;
-  }
   h1 {
     @apply font-semibold text-3xl mt-2 mb-4;
   }
@@ -101,15 +90,9 @@ body {
     @apply border-gray-400 my-6;
   }
   blockquote {
-    @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4;
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:text-gray-400 mb-4;
   }
-  strong {
-    background: linear-gradient(
-      to top,
-      rgba(111, 255, 0, 0.34) 50%,
-      transparent 50%
-    );
-  }
+
   table {
     @apply table-auto border-collapse my-4;
     width: 100%;
@@ -124,8 +107,11 @@ body {
   a {
     text-decoration: underline;
   }
+  img {
+    @apply md:w-4/5 m-[0_auto] my-6;
+  }
   pre {
-    @apply p-[1rem_0] rounded-lg overflow-x-auto;
+    @apply p-[1rem_0] rounded-lg overflow-x-auto my-4;
   }
 
   pre [data-line] {
