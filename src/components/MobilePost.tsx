@@ -1,14 +1,9 @@
 export default function MobilePost({ post }: { post: any }) {
-  console.log(post.slug?.split("/")[0]);
   return (
     <div className="container relative w-full max-w-[95vw] h-full max-h-[95vh] bg-[#FEFEFE] border rounded-4xl overflow-hidden">
       <h1 className="py-2 text-center mx-auto max-w-[80%] text-base font-semibold truncate py-1">
         {post.title}
       </h1>
-
-        <h1 className="mx-0! max-w-fit relative">
-          <span className="relative title">{post.title}</span>
-        </h1>
 
       <div className="m-4 h-full p-4 sm:p-5 overflow-y-auto content pb-12">
         <div

@@ -44,8 +44,8 @@ export async function getPostsList(prefix?: string) {
 
 export async function getPostBySlug(slug: string) {
   try {
-    const key = `${slug}.mdx`;
-    console.log("Finding S3 key:", key);
+    const decodedSlug = decodeURIComponent(slug);
+    const key = `${decodedSlug}.mdx`;
 
     const command = new GetObjectCommand({
       Bucket: "chiaksan-peaches",
