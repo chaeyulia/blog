@@ -67,7 +67,7 @@ export default function DesktopPostList({
                 className={`transition-all duration-300 ease-in-out ${
                   isSearchOpen
                     ? "w-64 opacity-100"
-                    : "w-[39px] rounded-full opacity-100 hover:bg-neutral-100 dark:bg-[#3d3d3d22] dark:hover:bg-[#3d3d3d]"
+                    : "w-[39px] rounded-full opacity-100 hover:bg-neutral-100 dark:bg-[#3d3d3d22] dark:hover:bg-[#3d3d3d] hover:cursor-pointer"
                 }`}
               >
                 {!isSearchOpen ? (
