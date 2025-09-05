@@ -1,6 +1,26 @@
 import DesktopPost from "@/components/DesktopPost";
 import MobilePost from "@/components/MobilePost";
 import { getPostBySlug } from "@/utils/post";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slugPath = resolvedParams.slug.join("/");
+  const post = await getPostBySlug(slugPath);
+
+  const plainText = post.content.replace(/<[^>]*>/g, "").trim();
+  const description =
+    plainText.length > 200 ? plainText.substring(0, 200) + "..." : plainText;
+
+  return {
+    title: `치악산 복숭아 | ${post.title}`,
+    description,
+  };
+}
 
 export default async function Post({
   params,
