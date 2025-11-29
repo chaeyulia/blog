@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
+import { WebVitals } from "./web-vitals";
 import "./globals.css";
 
 const notoSansKR = Noto_Sans_KR({
@@ -7,6 +8,16 @@ const notoSansKR = Noto_Sans_KR({
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-noto-sans-kr",
+  preload: true,
+  fallback: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
 });
 
 export const metadata: Metadata = {
@@ -52,7 +63,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={notoSansKR.variable}>
-      <body className={notoSansKR.className}>{children}</body>
+      <body className={notoSansKR.className}>
+        <WebVitals />
+        {children}
+      </body>
     </html>
   );
 }

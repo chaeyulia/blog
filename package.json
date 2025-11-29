@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@next/bundle-analyzer": "^16.0.5",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
