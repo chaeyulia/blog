@@ -64,14 +64,14 @@ node scripts/optimize-images.mjs
 
 ### 번들 크기 분석
 ```bash
-npm run build:analyze
+yarn build:analyze
 ```
 브라우저에서 자동으로 번들 분석 결과가 열립니다.
 
 ### Web Vitals 확인
 개발 모드에서 브라우저 콘솔을 열면 성능 메트릭이 자동으로 출력됩니다:
 ```bash
-npm run dev
+yarn dev
 ```
 
 ## 📈 성능 개선 효과
@@ -123,7 +123,7 @@ Google Analytics로 성능 데이터를 전송할 수 있습니다.
 
 ## 💡 권장사항
 
-1. **정기적인 번들 분석**: 새로운 패키지 추가 시 `npm run build:analyze` 실행
+1. **정기적인 번들 분석**: 새로운 패키지 추가 시 `yarn build:analyze` 실행
 2. **Web Vitals 모니터링**: 프로덕션에서 실제 사용자 데이터 수집
 3. **이미지 최적화**: 새 이미지 추가 시 `scripts/optimize-images.mjs` 실행
 4. **ISR 재검증 주기 조정**: 콘텐츠 업데이트 빈도에 따라 `revalidate` 값 조정
