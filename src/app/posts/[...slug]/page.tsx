@@ -3,6 +3,9 @@ import MobilePost from "@/components/MobilePost";
 import { getPostBySlug } from "@/utils/post";
 import { Metadata } from "next";
 
+// S3 데이터를 1시간마다 재검증 (ISR)
+export const revalidate = 3600;
+
 export async function generateMetadata({
   params,
 }: {
