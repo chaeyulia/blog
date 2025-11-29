@@ -1,10 +1,19 @@
 import DesktopPost from "@/components/DesktopPost";
 import MobilePost from "@/components/MobilePost";
-import { getPostBySlug } from "@/utils/post";
+import { getPostBySlug, getPostsList } from "@/utils/post";
 import { Metadata } from "next";
 
 // S3 데이터를 1시간마다 재검증 (ISR)
 export const revalidate = 3600;
+
+// 빌드 시 모든 포스트 페이지를 미리 생성
+export async function generateStaticParams() {
+  const posts = await getPostsList();
+
+  return posts.map((post) => ({
+    slug: post.slug?.split("/") || [],
+  }));
+}
 
 export async function generateMetadata({
   params,
