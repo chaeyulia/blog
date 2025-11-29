@@ -1,6 +1,7 @@
 import WindowMenuList from "./WindowMenuList";
+import type { Post } from "@/types/post";
 
-export default function DesktopPost({ post }: { post: any }) {
+export default function DesktopPost({ post }: { post: Post }) {
   return (
     <div
       id="parent"

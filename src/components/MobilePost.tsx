@@ -1,4 +1,6 @@
-export default function MobilePost({ post }: { post: any }) {
+import type { Post } from "@/types/post";
+
+export default function MobilePost({ post }: { post: Post }) {
   return (
     <div className="container relative w-full max-w-[95vw] h-full max-h-[95vh] bg-[#FEFEFE] border rounded-4xl overflow-hidden">
       <h1 className="py-2 text-center mx-auto max-w-[80%] text-base font-semibold truncate py-1">

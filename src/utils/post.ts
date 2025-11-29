@@ -9,6 +9,7 @@ import remarkRehype from "remark-rehype";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
 import matter from "gray-matter";
+import type { Post } from "@/types/post";
 
 const s3 = new S3Client({
   region: "ap-northeast-2",
@@ -18,7 +19,9 @@ const s3 = new S3Client({
   },
 });
 
-export async function getPostsList(prefix?: string) {
+export async function getPostsList(
+  prefix?: string
+): Promise<Pick<Post, "key" | "slug" | "lastModified">[]> {
   try {
     const command = new ListObjectsV2Command({
       Bucket: "chiaksan-peaches",
@@ -42,7 +45,7 @@ export async function getPostsList(prefix?: string) {
   }
 }
 
-export async function getPostBySlug(slug: string) {
+export async function getPostBySlug(slug: string): Promise<Post> {
   try {
     const decodedSlug = decodeURIComponent(slug);
     const key = `${decodedSlug}.mdx`;
