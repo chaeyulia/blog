@@ -7,12 +7,12 @@ export const categories = [
   {
     id: "study",
     name: "알게된 것",
-    prefix: "study/",
+    prefix: "study",
   },
   {
     id: "retrospective",
     name: "회고",
-    prefix: "retrospective/",
+    prefix: "retrospective",
   },
 ] as const;
 

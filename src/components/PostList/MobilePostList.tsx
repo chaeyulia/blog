@@ -13,8 +13,7 @@ export default function MobilePostList({
 
   const filteredBySearch = posts.filter((post) => {
     if (!searchTerm) return true;
-    const title = post.slug?.split("/").pop()?.replace(/-/g, " ") || "";
-    return title.toLowerCase().includes(searchTerm.toLowerCase());
+    return (post.title || "").toLowerCase().includes(searchTerm.toLowerCase());
   });
   return (
     <div className="container relative w-full max-w-[95vw] h-full max-h-[95vh] rounded-4xl border overflow-hidden">
@@ -58,24 +57,16 @@ export default function MobilePostList({
           <div className="h-full overflow-y-auto">
             {filteredBySearch.map((post, index) => (
               <a
-                key={post.key || index}
+                key={post.slug || index}
                 href={`/posts/${post.slug}`}
                 className="flex flex-col p-3 cursor-pointer transition-colors border-b border-neutral-200 dark:border-neutral-600  hover:bg-neutral-100 dark:hover:bg-neutral-800"
               >
-                <h3 className="font-medium text-base">
-                  {post.slug?.split("/").pop()?.replace(/-/g, " ")}
-                </h3>
+                <h3 className="font-medium text-base">{post.title}</h3>
 
                 <div className="flex items-center text-xs">
-                  {post.lastModified
-                    ? post.lastModified.toLocaleDateString("ko-KR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                      })
-                    : "날짜 없음"}
+                  {post.date || "날짜 없음"}
                   <span className="mx-1">-</span>
-                  <span>{post.slug?.split("/")[0] || ""}</span>
+                  <span>{post.category || ""}</span>
                 </div>
               </a>
             ))}

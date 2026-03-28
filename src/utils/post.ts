@@ -1,46 +1,48 @@
-import {
-  S3Client,
-  GetObjectCommand,
-  ListObjectsV2Command,
-} from "@aws-sdk/client-s3";
+import { Client } from "@notionhq/client";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { NotionToMarkdown } from "notion-to-md";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
-import matter from "gray-matter";
 import type { Post } from "@/types/post";
 
-const s3 = new S3Client({
-  region: "ap-northeast-2",
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
-});
+const notion = new Client({ auth: process.env.NOTION_TOKEN });
+const n2m = new NotionToMarkdown({ notionClient: notion });
+
+const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
 export async function getPostsList(
-  prefix?: string
-): Promise<Pick<Post, "key" | "slug" | "lastModified">[]> {
+  category?: string
+): Promise<Pick<Post, "slug" | "title" | "date" | "category">[]> {
   try {
-    const command = new ListObjectsV2Command({
-      Bucket: "chiaksan-peaches",
-      Prefix: prefix,
+    const filter =
+      category && category !== ""
+        ? {
+            and: [
+              { property: "published", checkbox: { equals: true } },
+              { property: "category", select: { equals: category } },
+            ],
+          }
+        : { property: "published", checkbox: { equals: true } };
+
+    const response = await notion.databases.query({
+      database_id: DATABASE_ID,
+      filter,
+      sorts: [{ property: "date", direction: "descending" }],
     });
 
-    const response = await s3.send(command);
-    return (
-      response.Contents?.filter(
-        (obj) => obj.Key && obj.Key.endsWith(".mdx") && !obj.Key.endsWith("/")
-      ).map((obj) => ({
-        key: obj.Key,
-        slug: obj.Key?.replace(".mdx", ""),
-        lastModified: obj.LastModified,
-      })) || []
-    );
+    return response.results
+      .filter((page): page is PageObjectResponse => page.object === "page")
+      .map((page) => ({
+        slug: getTextProp(page.properties.slug),
+        title: getTitleProp(page.properties.title),
+        date: getDateProp(page.properties.date),
+        category: getSelectProp(page.properties.category),
+      }));
   } catch (error) {
-    console.error("S3 파일 목록 조회 실패:", error);
-    console.error("Error details:", JSON.stringify(error, null, 2));
+    console.error("노션 글 목록 조회 실패:", error);
     return [];
   }
 }
@@ -48,43 +50,91 @@ export async function getPostsList(
 export async function getPostBySlug(slug: string): Promise<Post> {
   try {
     const decodedSlug = decodeURIComponent(slug);
-    const key = `${decodedSlug}.mdx`;
 
-    const command = new GetObjectCommand({
-      Bucket: "chiaksan-peaches",
-      Key: key,
+    const response = await notion.databases.query({
+      database_id: DATABASE_ID,
+      filter: {
+        and: [
+          { property: "published", checkbox: { equals: true } },
+          { property: "slug", rich_text: { equals: decodedSlug } },
+        ],
+      },
     });
 
-    const response = await s3.send(command);
-    const markdown = await response.Body?.transformToString();
+    const page = response.results.find(
+      (p): p is PageObjectResponse => p.object === "page"
+    );
 
-    const { data: frontmatter, content } = matter(markdown || "");
+    if (!page) {
+      return {
+        title: "404 NOT FOUND",
+        content: "요청하신 포스트가 존재하지 않습니다.",
+        slug,
+      };
+    }
+
+    const mdBlocks = await n2m.pageToMarkdown(page.id);
+    const markdown = n2m.toMarkdownString(mdBlocks).parent;
 
     const processedContent = await remark()
       .use(remarkGfm)
-      .use(remarkRehype)
+      .use(remarkRehype, { allowDangerousHtml: true })
       .use(rehypePrettyCode, {
         theme: "github-dark",
         keepBackground: true,
         defaultLang: "plaintext",
       })
-      .use(rehypeStringify)
-      .process(content);
+      .use(rehypeStringify, { allowDangerousHtml: true })
+      .process(markdown);
 
     return {
       title:
-        frontmatter?.title || slug.split("/").pop()?.replace(/-/g, " ") || slug,
-      date: frontmatter?.date,
-      tags: frontmatter?.tags,
+        getTitleProp(page.properties.title) ||
+        slug.split("/").pop()?.replace(/-/g, " ") ||
+        slug,
+      date: getDateProp(page.properties.date),
+      tags: getMultiSelectProp(page.properties.tags),
+      category: getSelectProp(page.properties.category),
       content: processedContent.toString(),
-      slug: slug,
+      slug,
     };
   } catch (error) {
-    console.error("S3에서 파일을 찾을 수 없습니다:", error);
+    console.error("노션에서 포스트를 불러오지 못했습니다:", error);
     return {
       title: "404 NOT FOUND",
       content: "요청하신 포스트가 존재하지 않습니다.",
-      slug: slug,
+      slug,
     };
   }
+}
+
+// 속성 파싱 헬퍼
+function getTitleProp(prop: unknown): string {
+  if (!prop || typeof prop !== "object") return "";
+  const p = prop as { title?: Array<{ plain_text?: string }> };
+  return p.title?.[0]?.plain_text ?? "";
+}
+
+function getTextProp(prop: unknown): string {
+  if (!prop || typeof prop !== "object") return "";
+  const p = prop as { rich_text?: Array<{ plain_text?: string }> };
+  return p.rich_text?.[0]?.plain_text ?? "";
+}
+
+function getDateProp(prop: unknown): string | undefined {
+  if (!prop || typeof prop !== "object") return undefined;
+  const p = prop as { date?: { start?: string } };
+  return p.date?.start;
+}
+
+function getSelectProp(prop: unknown): string | undefined {
+  if (!prop || typeof prop !== "object") return undefined;
+  const p = prop as { select?: { name?: string } };
+  return p.select?.name;
+}
+
+function getMultiSelectProp(prop: unknown): string[] {
+  if (!prop || typeof prop !== "object") return [];
+  const p = prop as { multi_select?: Array<{ name?: string }> };
+  return p.multi_select?.map((item) => item.name ?? "").filter(Boolean) ?? [];
 }

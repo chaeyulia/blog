@@ -3,8 +3,8 @@ import MobilePost from "@/components/MobilePost";
 import { getPostBySlug, getPostsList } from "@/utils/post";
 import { Metadata } from "next";
 
-// S3 데이터를 1시간마다 재검증 (ISR)
-export const revalidate = 3600;
+// 노션 이미지 URL 만료(1시간) 전에 갱신
+export const revalidate = 3000;
 
 // 빌드 시 모든 포스트 페이지를 미리 생성
 export async function generateStaticParams() {

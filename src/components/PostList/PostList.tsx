@@ -5,18 +5,14 @@ import DesktopPostList from "./DesktopPostList";
 import MobilePostList from "./MobilePostList";
 import { categories, CategoryId, Categories } from "@/constants/categories";
 
-interface Post {
-  key?: string;
-  slug?: string;
-  lastModified?: Date;
-}
+import type { Post } from "@/types/post";
 
 interface PostListProps {
-  allPosts: Post[];
+  allPosts: Pick<Post, "slug" | "title" | "date" | "category">[];
 }
 
 export interface ChildProps {
-  posts: Post[];
+  posts: Pick<Post, "slug" | "title" | "date" | "category">[];
   selectedCategory: CategoryId;
   setSelectedCategory: React.Dispatch<React.SetStateAction<CategoryId>>;
   isSearchOpen: boolean;
@@ -34,7 +30,7 @@ export default function PostList({ allPosts }: PostListProps) {
     if (!selectedCat) return false;
 
     if (selectedCat.id === "allPosts") return true;
-    return post.slug?.startsWith(selectedCat.prefix);
+    return post.category === selectedCat.prefix;
   });
 
   return (

@@ -15,8 +15,7 @@ export default function DesktopPostList({
 
   const filteredBySearch = posts.filter((post) => {
     if (!searchTerm) return true;
-    const title = post.slug?.split("/").pop()?.replace(/-/g, " ") || "";
-    return title.toLowerCase().includes(searchTerm.toLowerCase());
+    return (post.title || "").toLowerCase().includes(searchTerm.toLowerCase());
   });
   return (
     <div
@@ -121,29 +120,21 @@ export default function DesktopPostList({
             <div>
               {filteredBySearch.map((post, index) => (
                 <a
-                  key={post.key || index}
+                  key={post.slug || index}
                   href={`/posts/${post.slug}`}
                   className={`grid grid-cols-12 gap-4 p-3 rounded-lg hover:bg-neutral-200 dark:hover:bg-[#3d3d3d] cursor-pointer transition-colors ${
                     index % 2 === 1 ? "bg-[#F4F5F5] dark:bg-[#292929]" : ""
                   }`}
                 >
                   <div className="col-span-6">
-                    <h3 className="font-medium">
-                      {post.slug?.split("/").pop()?.replace(/-/g, " ")}
-                    </h3>
+                    <h3 className="font-medium">{post.title}</h3>
                   </div>
                   <div className="col-span-3 text-sm text-neutral-500">
-                    {post.lastModified
-                      ? post.lastModified.toLocaleDateString("ko-KR", {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                        })
-                      : "날짜 없음"}
+                    {post.date || "날짜 없음"}
                   </div>
                   <div className="col-span-3 text-sm text-neutral-500">
                     <span className="inline-block text-xs">
-                      {post.slug?.split("/")[0] || "-"}
+                      {post.category || "-"}
                     </span>
                   </div>
                 </a>
